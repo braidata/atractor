@@ -37,7 +37,7 @@ class Mover {
     display() {
         noStroke();
         fill(this.isAttracted ? color(0, 255, 0,90) : color(0, 255, 255,90)); // Rojo si está atraído, verde de lo contrario
-        ellipse(this.position.x, this.position.y, this.mass * 8, this.mass * 8);
+        ellipse(this.position.x, this.position.y, this.mass * 2, this.mass * 2);
         // display mass and force
         text(this.mass.toFixed(2), this.position.x + 50, this.position.y);
         let barLength = map(strength, 0, 1, 0, 500); // Ajusta los valores según sea necesario

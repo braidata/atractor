@@ -13,6 +13,7 @@ function setup() {
     atractor = new Atractor();
     visualizador = new Visualizador();
     ambiente = new Ambiente();
+    
     for (let i = 0; i < 10; i++) {
         movers.push(new Mover(random(width), random(height), random(0.1, 2)));
     }
@@ -20,9 +21,9 @@ function setup() {
 
 function draw() {
     background(255);
-    let modes = [ADD, DARKEST, LIGHTEST, DIFFERENCE, EXCLUSION, MULTIPLY, SCREEN, REPLACE, OVERLAY, HARD_LIGHT, SOFT_LIGHT, DODGE, BURN, SUBTRACT, BLEND];
+    let modes = [ DODGE, BURN, BLEND];
 
-    
+    //blendMode(random(modes))
     ambiente.display();
     
     atractor.display();
@@ -42,7 +43,7 @@ function draw() {
         if (d < 50) { // Umbral de distancia para ser absorbido
             atractor.absorbMass(mover);
             
-        } else if (d < 500) {
+        } else if (d < 250) {
             let force = atractor.calculateAttraction(mover);
             strength = atractor.getAttractionStrength(mover); 
             mover.applyForce(force);
@@ -107,6 +108,12 @@ function createAtractorWithMass() {
 }
 
 function keyPressed() {
+    if (key === "p") {
+        noLoop();
+    }
+    if (key === "l"){
+        loop()
+    }
     if (keyCode === ENTER && input) {
         createAtractorWithMass();
     }

@@ -2,7 +2,7 @@
 class Atractor {
     constructor() {
         this.position = createVector(width / 2, height / 2);
-        this.mass = 20; // Masa inicial
+        this.mass = 10; // Masa inicial
         this.isDragging = false;
         this.G = 1; // Constante gravitacional
         this.F = createVector(0, 0);
