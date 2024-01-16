@@ -1,4 +1,5 @@
 
+let nebulosa;
 let atractors = []; // Ahora es un arreglo para soportar múltiples atractores
 let input;
 let visualizador;
@@ -9,23 +10,43 @@ let movers = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    
+
     atractor = new Atractor();
     visualizador = new Visualizador();
     ambiente = new Ambiente();
-    
+
+        // Crear nebulosa
+        nebulosa = createGraphics(width, height);
+        nebulosa.pixelDensity(1); // Asegurar la compatibilidad con diferentes pantallas
+        nebulosa.noStroke();
+        for (let i = 0; i < 500; i++) {  // La cantidad de 'estrellas'
+            nebulosa.fill(255, 255, 255, random(100, 255));  // Estrellas con brillo variable
+            nebulosa.ellipse(random(width), random(height), random(1, 3), random(1, 3));
+        }
+        
+        // Dibujar un gradiente como fondo de nebulosa
+        for (let y = 0; y < height; y++) {
+            let c1 = color(10, 10, 20); // Color azul oscuro del espacio
+            let c2 = color(30, 10, 40); // Color violeta del espacio
+            let inter = map(y, 0, height, 0, 1);
+            let c = lerpColor(c1, c2, inter);
+            nebulosa.stroke(c);
+            nebulosa.line(0, y, nebulosa.width, y);
+        }
+
     for (let i = 0; i < 10; i++) {
         movers.push(new Mover(random(width), random(height), random(0.1, 2)));
     }
 }
 
 function draw() {
-    background(255);
-    let modes = [ DODGE, BURN, BLEND];
+    //background(255);
+    image(nebulosa, 0, 0);
+    let modes = [DODGE, BURN, BLEND];
 
     //blendMode(random(modes))
-    ambiente.display();
-    
+    //ambiente.display();
+
     atractor.display();
 
     // Primero, manejar la interacción entre los Movers
@@ -42,12 +63,12 @@ function draw() {
 
         if (d < 50) { // Umbral de distancia para ser absorbido
             atractor.absorbMass(mover);
-            
+
         } else if (d < 250) {
             let force = atractor.calculateAttraction(mover);
-            strength = atractor.getAttractionStrength(mover); 
+            strength = atractor.getAttractionStrength(mover);
             mover.applyForce(force);
-            
+
         } else {
             mover.isAttracted = false; // Establecer isAttracted a false si no está en el rango de atracción
         }
@@ -111,7 +132,7 @@ function keyPressed() {
     if (key === "p") {
         noLoop();
     }
-    if (key === "l"){
+    if (key === "l") {
         loop()
     }
     if (keyCode === ENTER && input) {

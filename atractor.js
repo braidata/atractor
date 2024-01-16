@@ -34,7 +34,7 @@ class Atractor {
     display() {
         noStroke();
         fill(this.isAttracted ? color(255, 100, 0,90) : color(255, 0, 0,90));
-        ellipse(this.position.x, this.position.y, this.mass * 2, this.mass * 2);
+        ellipse(this.position.x, this.position.y, this.mass, this.mass);
         text(this.mass.toFixed(2), this.position.x + this.mass * 2, this.position.y);
         // text(this.F, this.position.x + 50, this.position.y + 20);
         let barLength = map(strength, 0, 1, 0, 500); // Ajusta los valores según sea necesario
